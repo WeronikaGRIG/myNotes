@@ -1,10 +1,10 @@
 const addBtn = document.querySelector('.add');
 const saveBtn = document.querySelector('.save');
 const cancelBtn = document.querySelector('.cancel');
-const deleteBtns = document.getElementsByClassName('.delete-note');
+const deleteBtns = document.getElementsByClassName('delete-note');
 const deleteAllBtn = document.querySelector('.delete-all');
 
-const noteAres = document.querySelector('.note-area');
+const noteArea = document.querySelector('.note-area');
 const notePanel = document.querySelector('.note-panel');
 const category = document.querySelector('#category');
 const textarea = document.querySelector('#text');
@@ -41,8 +41,8 @@ const createNote = () => {
     newNote.innerHTML = `
                 <div class="note-header">
                 <h3 class="note-title">${selectedValue}</h3>
-                <button class="delete-note">
-                    <i class="fas fi-times icon"></i>
+                <button class="delete-note" onclick="deleteNote(${cardId})>
+                    <i class="far fa-window-close"></i>
                 </button>
             </div>
 
@@ -50,19 +50,42 @@ const createNote = () => {
                 ${textarea.value}
             </div>`
 
-    noteAres.appendChild(newNote);
+    noteArea.appendChild(newNote);
     cardId++;
     textarea.value = '';
     category.selectedIndex = 0;
     notePanel.style.display = 'none';
+    checkColor(newNote)
 }
 
 const selectValue = () => {
     selectedValue = category.options[category.selectedIndex].text;
 }
 
+const checkColor = note => {
+    switch (selectedValue) {
+        case 'Zakupy':
+            note.style.backgroundColor = 'rgb(72,255,0)';
+            break;
+        case 'Praca':
+            note.style.backgroundColor = 'rgb(255,243,0)';
+            break;
+        case 'Inne':
+            note.style.backgroundColor = 'rgb(0,170,255)';
+            break;
+    }
+}
 
+const deleteNote = id => {
+    const noteToDelete = document.getElementById(id);
+    noteArea.removeChild(noteToDelete);
+}
+
+const deleteAllNote = () => {
+    noteArea.textContent = '';
+}
 
 addBtn.addEventListener('click', openPanel);
 cancelBtn.addEventListener('click', closePanel);
 saveBtn.addEventListener('click', addNote);
+deleteAllBtn.addEventListener('click', deleteAllNote);

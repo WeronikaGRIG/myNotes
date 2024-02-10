@@ -41,6 +41,7 @@ body {
 
 .icon {
     margin-right: 10px;
+    z-index: 2;
 }
 
 .add {
